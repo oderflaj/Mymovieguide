@@ -1,0 +1,12 @@
+{
+  "name": "MyMovieGuide",
+  "displayName": "MyMovieGuide",
+  "expo": {
+    "name": "MyMovieGuide",
+    "slug": "MyMovieGuide",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
