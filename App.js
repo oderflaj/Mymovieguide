@@ -53,13 +53,13 @@ export default function App() {
 
   return fontsLoaded ? (
     <>
-      <StatusBar style="light" />
       <HeaderContext.Provider
         value={{
           titleScreen: currentTitle,
           updateTitleScreen: setCurrentTitle,
         }}
       >
+        <StatusBar style="light" />
         <Container />
       </HeaderContext.Provider>
     </>
