@@ -4,8 +4,8 @@ import * as Localization from "expo-localization";
 import { I18nManager } from "react-native";
 
 export const translationGetters = {
-  "es-ES": () => require("./es.json"),
-  "en-US": () => require("./en.json"),
+  es: () => require("./es.json"),
+  en: () => require("./en.json"),
 };
 
 export const IMLocalized = memoize(
@@ -22,11 +22,16 @@ export const init = () => {
   // update layout direction
   I18nManager.forceRTL(isRTL);
   // set i18n-js config
-  console.log(localeLanguageTag);
-  console.log(translationGetters);
+
+  let language = "en";
+  try {
+    language = localeLanguageTag.substring(0, 2);
+  } catch (error) {
+    console.log("Error to define language:", error);
+  }
 
   i18n.translations = {
-    [localeLanguageTag]: translationGetters[localeLanguageTag](),
+    [localeLanguageTag]: translationGetters[language](),
   };
   i18n.locale = localeLanguageTag;
 };
