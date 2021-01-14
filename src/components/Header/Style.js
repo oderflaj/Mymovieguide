@@ -17,6 +17,6 @@ export default new StyleSheet.create({
   titleText: {
     fontFamily: "Anton-Regular",
     color: "#fff",
-    fontSize: 25,
+    fontSize: 35,
   },
 });

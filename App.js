@@ -9,7 +9,7 @@ import { IMLocalized, init } from "./src/services/localization/IMLocalized";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Font from "expo-font";
-import { HeaderContext } from "./src/context/AppContext";
+import { AppContext } from "./src/context/AppContext";
 
 const Stack = createStackNavigator();
 
@@ -18,6 +18,7 @@ export default function App() {
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [currentTitle, setCurrentTitle] = useState(IMLocalized("movieTitle"));
+  const [currentOrderBy, setCurrentOrderBy] = useState("audience");
 
   useEffect(() => {
     if (!fontsLoaded) {
@@ -25,9 +26,23 @@ export default function App() {
     }
   }, []);
 
+  /*
+  useEffect(() => {
+    let mounted = true;
+
+
+
+
+    return function cleanup() {
+      mounted = false;
+    };
+  }, [input]);
+  */
+
   const loadFonts = async () => {
     await Font.loadAsync({
       "Anton-Regular": require("./assets/fonts/Anton/Anton-Regular.ttf"),
+      "BarlowSemiCondensed-Regular": require("./assets/fonts/Barlow/BarlowSemiCondensed-Regular.ttf"),
     });
     setFontsLoaded(true);
   };
@@ -53,15 +68,17 @@ export default function App() {
 
   return fontsLoaded ? (
     <>
-      <HeaderContext.Provider
+      <AppContext.Provider
         value={{
           titleScreen: currentTitle,
           updateTitleScreen: setCurrentTitle,
+          orderBy: currentOrderBy,
+          updateOrderBy: setCurrentOrderBy,
         }}
       >
         <StatusBar style="light" />
         <Container />
-      </HeaderContext.Provider>
+      </AppContext.Provider>
     </>
   ) : (
     <Loading />

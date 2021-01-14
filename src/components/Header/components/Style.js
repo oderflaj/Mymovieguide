@@ -3,16 +3,18 @@ import { StyleSheet } from "react-native";
 export default new StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-end",
     marginTop: 22,
   },
   modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
+    margin: 15,
+    backgroundColor: "rgb(50, 42, 135)",
+    borderRadius: 8,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 6,
+    paddingBottom: 12,
+    alignItems: "flex-start",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -22,19 +24,23 @@ export default new StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  openButton: {
-    backgroundColor: "#F194FF",
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
   modalText: {
-    marginBottom: 15,
     textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 25,
+    color: "#fff",
+  },
+
+  textStyle: {
+    color: "#fff",
+    fontSize: 20,
+    marginLeft: 5,
+  },
+  itemContainer: {
+    marginTop: 6,
+    flexDirection: "row",
+    alignItems: "center",
+
+    width: "100%",
   },
 });

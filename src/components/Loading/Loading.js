@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { View, Text } from "react-native";
 import Style from "./Style";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { IMLocalized, init } from "../../services/localization/IMLocalized";
+import { IMLocalized } from "../../services/localization/IMLocalized";
 
 export default () => {
-  init();
+  //init();
   const size = 54;
   useEffect(() => {}, []);
   return (
