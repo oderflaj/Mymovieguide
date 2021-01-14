@@ -1,6 +1,7 @@
 {
   "loading": "CARGANDO",
   "movieTitle": "Peliculas Pop",
+  "movieDetailTitle": "Detalle Pelicula",
   "orderBy": "ORDENAR POR:",
   "higherAudience": "Alta Audiencia",
   "mostPopular": "Mas Popular",

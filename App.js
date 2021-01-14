@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MoviesScreen from "./src/scenes/Movies/Movies";
 import DetailsScreen from "./src/scenes/Details/Details";
@@ -26,28 +26,19 @@ export default function App() {
     }
   }, []);
 
-  /*
-  useEffect(() => {
-    let mounted = true;
-
-
-
-
-    return function cleanup() {
-      mounted = false;
-    };
-  }, [input]);
-  */
-
   const loadFonts = async () => {
     await Font.loadAsync({
       "Anton-Regular": require("./assets/fonts/Anton/Anton-Regular.ttf"),
       "BarlowSemiCondensed-Regular": require("./assets/fonts/Barlow/BarlowSemiCondensed-Regular.ttf"),
+      "BarlowSemiCondensed-ExtraBold": require("./assets/fonts/Barlow/BarlowSemiCondensed-ExtraBold.ttf"),
+      "BarlowSemiCondensed-SemiBoldItalic": require("./assets/fonts/Barlow/BarlowSemiCondensed-SemiBoldItalic.ttf"),
+      "BarlowSemiCondensed-Medium": require("./assets/fonts/Barlow/BarlowSemiCondensed-Medium.ttf"),
     });
     setFontsLoaded(true);
   };
 
   const Container = () => {
+    const { titleScreen } = useContext(AppContext);
     return (
       <NavigationContainer>
         <Stack.Navigator
@@ -55,7 +46,9 @@ export default function App() {
             headerStyle: {
               backgroundColor: "rgb(28, 23, 83)",
             },
-            headerTitle: (props) => <Header {...props} />,
+            headerTitle: (props) => (
+              <Header {...props} titleScreen={titleScreen} />
+            ),
             headerTintColor: "#fff",
           }}
         >
@@ -71,7 +64,6 @@ export default function App() {
       <AppContext.Provider
         value={{
           titleScreen: currentTitle,
-          updateTitleScreen: setCurrentTitle,
           orderBy: currentOrderBy,
           updateOrderBy: setCurrentOrderBy,
         }}

@@ -1,6 +1,7 @@
 {
   "loading": "LOADING",
   "movieTitle": "Pop Movies",
+  "movieDetailTitle": "Movie Detail",
   "orderBy": "ORDER BY:",
   "higherAudience": "Higher Audience",
   "mostPopular": "Most Popular",

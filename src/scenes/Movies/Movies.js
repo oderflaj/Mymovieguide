@@ -9,10 +9,10 @@ import Style from "./Styles";
 
 const screen = Dimensions.get("screen");
 
-export default (props) => {
+export default ({ navigation }) => {
   const [indexListMovies, setIndexListMovies] = useState(1);
   const [listMovies, setListMovies] = useState(null);
-  const { updateTitleScreen, orderBy } = useContext(AppContext);
+  const { orderBy } = useContext(AppContext);
 
   useEffect(() => {
     try {
@@ -25,8 +25,6 @@ export default (props) => {
       setListMovies({ page: 0, results: [] });
       console.error(error);
     }
-
-    updateTitleScreen(IMLocalized("movieTitle"));
   }, [0]);
 
   const handleLoadMoreMovies = async () => {
@@ -35,7 +33,6 @@ export default (props) => {
         setIndexListMovies(indexListMovies + 1);
         let temporalList = listMovies;
         temporalList = temporalList.concat(list.results);
-        console.log(temporalList);
         setListMovies(temporalList);
       }
     );
@@ -43,10 +40,15 @@ export default (props) => {
   const renderItem = ({ item }) => {
     return (
       <MovieItemImage
-        id={item.id}
         image={item.poster_path}
         width={screen.width}
         height={screen.height}
+        actionPress={() =>
+          navigation.navigate("Detail", {
+            id: item.id,
+            language: Localization.locale,
+          })
+        }
       />
     );
   };
