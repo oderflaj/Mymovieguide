@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { View, Text, ScrollView, Linking } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, ScrollView } from "react-native";
 import { IMLocalized } from "../../services/localization/IMLocalized";
 import {
   Api,
@@ -10,6 +10,8 @@ import styles from "./Style";
 import { Image } from "react-native-expo-image-cache";
 import { preloading } from "../../../assets/images/Images";
 import TrailerLink from "../../components/TrailerLink/TrailerLink";
+import Error from "../ErrorMessage/ErrorMessage";
+import * as Network from "expo-network";
 
 export default ({ route }) => {
   const { id, language } = { ...route.params };
@@ -20,16 +22,21 @@ export default ({ route }) => {
 
   useEffect(() => {
     try {
-      GetMovieDetail(id, language).then((detail) => {
-        setMovie(detail);
-        setUri(`${Api.image}${detail.poster_path}`);
-        GetMovieTrailers(id, language).then((trailer) => {
-          let youtubeTrailer = trailer.results.filter(
-            (item) => item.site === "YouTube"
-          );
-
-          setTrailers(youtubeTrailer || []);
-        });
+      Network.getNetworkStateAsync().then((net) => {
+        if (net.isInternetReachable) {
+          GetMovieDetail(id, language).then((detail) => {
+            setMovie(detail);
+            setUri(`${Api.image}${detail.poster_path}`);
+            GetMovieTrailers(id, language).then((trailer) => {
+              let youtubeTrailer = trailer.results.filter(
+                (item) => item.site === "YouTube"
+              );
+              setTrailers(youtubeTrailer || []);
+            });
+          });
+        } else {
+          setErrorApi(IMLocalized("notInternet"));
+        }
       });
     } catch (error) {
       console.log(error);
@@ -40,6 +47,10 @@ export default ({ route }) => {
   const preview = {
     uri: preloading,
   };
+
+  if (errorApi) {
+    return <Error message={errorApi} />;
+  }
 
   return movie && uri !== "" && trailers ? (
     <ScrollView style={styles.container}>

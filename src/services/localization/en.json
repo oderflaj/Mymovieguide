@@ -6,5 +6,6 @@
   "higherAudience": "Higher Audience",
   "mostPopular": "Most Popular",
   "searching": "Searching Movies...",
-  "trailers": "Trailers"
+  "trailers": "Trailers",
+  "notInternet": "NO hay conexión a Internet"
 }
