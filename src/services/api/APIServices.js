@@ -9,6 +9,7 @@ export const Api = {
   audience: `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language={language}&page={page}`,
   detail: `https://api.themoviedb.org/3/movie/{movie_id}?api_key=${API_KEY}&language={language}`,
   video: `https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=${API_KEY}&language={language}`,
+  youtube: "https://www.youtube.com/watch?v=",
 };
 
 export const GetListMovies = async (sortBy, language, page = 1) => {
@@ -42,6 +43,32 @@ export const GetMovieDetail = async (id, language) => {
     const source = CancelToken.source();
 
     const URL = Api.detail
+      .replace("{language}", language.includes("es") ? "es-ES" : language)
+      .replace("{movie_id}", id);
+
+    const detail = axios
+      .get(URL, { cancelToken: source.token })
+      .then((dataDetail) => {
+        return dataDetail.data;
+      });
+
+    return detail;
+  } catch (error) {
+    if (axios.isCancel(error)) {
+      console.log("cancelled");
+    } else {
+      console.log(error);
+      throw error;
+    }
+  }
+};
+
+export const GetMovieTrailers = async (id, language) => {
+  try {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const URL = Api.video
       .replace("{language}", language.includes("es") ? "es-ES" : language)
       .replace("{movie_id}", id);
 

@@ -54,27 +54,25 @@ export default ({ navigation }) => {
   };
 
   return (
-    <View style={Style.container}>
-      <FlatList
-        data={listMovies}
-        contentContainerStyle={Style.contentContainerStyle}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        style={Style.flatListContainer}
-        onScrollEndDrag={() => handleLoadMoreMovies()}
-        onEndReachedThreshold={50}
-        ListFooterComponent={() => (
+    <FlatList
+      data={listMovies}
+      contentContainerStyle={Style.contentContainerStyle}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+      numColumns={2}
+      style={Style.flatListContainer}
+      onScrollEndDrag={() => handleLoadMoreMovies()}
+      onEndReachedThreshold={50}
+      ListFooterComponent={() => (
+        <>
+          <Text>{IMLocalized("searching")}</Text>
+        </>
+      )}
+      /*ListEmptyComponent={() => (
           <>
             <Text>{IMLocalized("searching")}</Text>
           </>
-        )}
-        ListEmptyComponent={() => (
-          <>
-            <Text>{IMLocalized("searching")}</Text>
-          </>
-        )}
-      />
-    </View>
+        )}*/
+    />
   );
 };

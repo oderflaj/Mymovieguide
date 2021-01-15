@@ -1,36 +1,92 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Linking } from "react-native";
 import { IMLocalized } from "../../services/localization/IMLocalized";
-import { GetMovieDetail } from "../../services/api/APIServices";
+import {
+  Api,
+  GetMovieDetail,
+  GetMovieTrailers,
+} from "../../services/api/APIServices";
 import styles from "./Style";
 import { Image } from "react-native-expo-image-cache";
+import { preloading } from "../../../assets/images/Images";
+import TrailerLink from "../../components/TrailerLink/TrailerLink";
 
 export default ({ route }) => {
   const { id, language } = { ...route.params };
   const [movie, setMovie] = useState(null);
+  const [uri, setUri] = useState("");
+  const [trailers, setTrailers] = useState(null);
   useEffect(() => {
     GetMovieDetail(id, language).then((detail) => {
-      //console.log(detail);
       setMovie(detail);
+      setUri(`${Api.image}${detail.poster_path}`);
+      GetMovieTrailers(id, language).then((trailer) => {
+        let youtubeTrailer = trailer.results.filter(
+          (item) => item.site === "YouTube"
+        );
+
+        setTrailers(youtubeTrailer || []);
+      });
     });
   }, [0]);
 
-  return movie ? (
+  const preview = {
+    uri: preloading,
+  };
+
+  return movie && uri !== "" && trailers ? (
     <ScrollView style={styles.container}>
-      <View>
+      <View style={styles.containerTitle}>
         <Text style={styles.textTitle}>{movie.title}</Text>
       </View>
-      <View>
-        <Text>
-          Año:{movie.release_date} Tiempo:{movie.runtime} Calif
-          {movie.vote_average}
-        </Text>
-      </View>
-      <View>
-        <Text>{movie.overview}</Text>
-      </View>
-      <View>
-        <Text>Trailers</Text>
+      <View style={styles.subcointainer}>
+        <View style={styles.containerAttributes}>
+          <View style={styles.containerImage}>
+            <Image
+              style={{
+                height: 180,
+                width: 130,
+                resizeMode: "cover",
+                borderRadius: 5,
+              }}
+              {...{ preview, uri }}
+              transitionDuration="500"
+              tint="light"
+            />
+          </View>
+          <View style={styles.subcontainerAttributes}>
+            <Text style={styles.textYear}>
+              {movie.release_date.substring(0, 4)}
+            </Text>
+            <Text style={styles.textTime}>{movie.runtime}min</Text>
+            <Text style={styles.textNormal}>{movie.vote_average} / 10</Text>
+          </View>
+        </View>
+        <View style={styles.containerOverview}>
+          <Text style={styles.textNormal}>{movie.overview}</Text>
+        </View>
+        <View>
+          {trailers.length > 0 ? (
+            <View style={styles.contentTrailers}>
+              <Text style={[styles.textTime, { marginBottom: 5 }]}>
+                {IMLocalized("trailers")}
+              </Text>
+              {trailers.map((trailer, index) => {
+                return (
+                  <TrailerLink
+                    key={trailer.id}
+                    video={trailer.key}
+                    name={trailer.name}
+                    line={index}
+                    lastLine={trailers.length}
+                  />
+                );
+              })}
+            </View>
+          ) : (
+            <></>
+          )}
+        </View>
       </View>
     </ScrollView>
   ) : (

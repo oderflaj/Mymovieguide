@@ -18,7 +18,7 @@ export default function App() {
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [currentTitle, setCurrentTitle] = useState(IMLocalized("movieTitle"));
-  const [currentOrderBy, setCurrentOrderBy] = useState("audience");
+  const [currentOrderBy, setCurrentOrderBy] = useState("popular");
 
   useEffect(() => {
     if (!fontsLoaded) {
@@ -30,7 +30,7 @@ export default function App() {
     await Font.loadAsync({
       "Anton-Regular": require("./assets/fonts/Anton/Anton-Regular.ttf"),
       "BarlowSemiCondensed-Regular": require("./assets/fonts/Barlow/BarlowSemiCondensed-Regular.ttf"),
-      "BarlowSemiCondensed-ExtraBold": require("./assets/fonts/Barlow/BarlowSemiCondensed-ExtraBold.ttf"),
+      "BarlowSemiCondensed-Bold": require("./assets/fonts/Barlow/BarlowSemiCondensed-Bold.ttf"),
       "BarlowSemiCondensed-SemiBoldItalic": require("./assets/fonts/Barlow/BarlowSemiCondensed-SemiBoldItalic.ttf"),
       "BarlowSemiCondensed-Medium": require("./assets/fonts/Barlow/BarlowSemiCondensed-Medium.ttf"),
     });
