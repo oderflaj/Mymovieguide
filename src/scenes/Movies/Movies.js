@@ -5,7 +5,7 @@ import { AppContext } from "../../context/AppContext";
 import { GetListMovies } from "../../services/api/APIServices";
 import * as Localization from "expo-localization";
 import MovieItemImage from "../../components/MovieItemImage/MovieItemImage";
-import Style from "./Styles";
+import styles from "./Styles";
 
 const screen = Dimensions.get("screen");
 
@@ -56,23 +56,18 @@ export default ({ navigation }) => {
   return (
     <FlatList
       data={listMovies}
-      contentContainerStyle={Style.contentContainerStyle}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       numColumns={2}
-      style={Style.flatListContainer}
+      style={styles.flatListContainer}
+      persistentScrollbar={true}
       onScrollEndDrag={() => handleLoadMoreMovies()}
       onEndReachedThreshold={50}
       ListFooterComponent={() => (
-        <>
-          <Text>{IMLocalized("searching")}</Text>
-        </>
+        <View style={styles.contentBottom}>
+          <Text style={styles.textBottom}>{IMLocalized("searching")}</Text>
+        </View>
       )}
-      /*ListEmptyComponent={() => (
-          <>
-            <Text>{IMLocalized("searching")}</Text>
-          </>
-        )}*/
     />
   );
 };

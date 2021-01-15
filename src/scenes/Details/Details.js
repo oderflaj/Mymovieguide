@@ -16,18 +16,25 @@ export default ({ route }) => {
   const [movie, setMovie] = useState(null);
   const [uri, setUri] = useState("");
   const [trailers, setTrailers] = useState(null);
-  useEffect(() => {
-    GetMovieDetail(id, language).then((detail) => {
-      setMovie(detail);
-      setUri(`${Api.image}${detail.poster_path}`);
-      GetMovieTrailers(id, language).then((trailer) => {
-        let youtubeTrailer = trailer.results.filter(
-          (item) => item.site === "YouTube"
-        );
+  const [errorApi, setErrorApi] = useState(null);
 
-        setTrailers(youtubeTrailer || []);
+  useEffect(() => {
+    try {
+      GetMovieDetail(id, language).then((detail) => {
+        setMovie(detail);
+        setUri(`${Api.image}${detail.poster_path}`);
+        GetMovieTrailers(id, language).then((trailer) => {
+          let youtubeTrailer = trailer.results.filter(
+            (item) => item.site === "YouTube"
+          );
+
+          setTrailers(youtubeTrailer || []);
+        });
       });
-    });
+    } catch (error) {
+      console.log(error);
+      setErrorApi(errorApi);
+    }
   }, [0]);
 
   const preview = {

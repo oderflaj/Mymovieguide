@@ -5,29 +5,6 @@ import { FontAwesome } from "@expo/vector-icons";
 import { GLOBAL_STYLE } from "../../GlobalStyle";
 import { Api } from "../../services/api/APIServices";
 
-const x = () => {
-  const supportedURL = "https://google.com";
-
-  const unsupportedURL = "slack://open?team=123456";
-
-  const OpenURLButton = ({ url, children }) => {
-    const handlePress = useCallback(async () => {
-      // Checking if the link is supported for links with custom URL scheme.
-      const supported = await Linking.canOpenURL(url);
-
-      if (supported) {
-        // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-        // by some browser in the mobile
-        await Linking.openURL(url);
-      } else {
-        Alert.alert(`Don't know how to open this URL: ${url}`);
-      }
-    }, [url]);
-
-    return <Button title={children} onPress={handlePress} />;
-  };
-};
-
 export default ({ video, name, line, lastLine }) => {
   const url = `${Api.youtube}${video}`;
   const styleLine =

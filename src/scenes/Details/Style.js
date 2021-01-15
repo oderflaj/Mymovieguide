@@ -5,7 +5,7 @@ export default new StyleSheet.create({
   container: {
     paddingLeft: 3,
     paddingRight: 3,
-    backgroundColor: "rgba(226, 231, 232, 0.3)",
+    backgroundColor: GLOBAL_STYLE.BACKGROUNDCOLOR,
   },
   containerTitle: {
     marginBottom: 10,

@@ -10,6 +10,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Font from "expo-font";
 import { AppContext } from "./src/context/AppContext";
+import * as ScreenOrientation from "expo-screen-orientation";
+//import NetworkProvider from "./src/services/NetworkProvider";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +21,8 @@ export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [currentTitle, setCurrentTitle] = useState(IMLocalized("movieTitle"));
   const [currentOrderBy, setCurrentOrderBy] = useState("popular");
+
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
 
   useEffect(() => {
     if (!fontsLoaded) {

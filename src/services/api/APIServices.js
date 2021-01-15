@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Alert } from "react-native";
 
 const API_KEY = "9ddd86c03e9f15f4f9f001cedbe9202b";
 
