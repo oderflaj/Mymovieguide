@@ -49,7 +49,7 @@ export default function App() {
           screenOptions={{
             headerStyle: {
               backgroundColor: "rgb(28, 23, 83)",
-              height: 150,
+              height: 125,
             },
             headerTitle: (props) => (
               <Header {...props} titleScreen={titleScreen} />

@@ -12,6 +12,7 @@ import { preloading } from "../../../assets/images/Images";
 import TrailerLink from "../../components/TrailerLink/TrailerLink";
 import Error from "../ErrorMessage/ErrorMessage";
 import * as Network from "expo-network";
+import { AntDesign } from "@expo/vector-icons";
 
 export default ({ route }) => {
   const { id, language } = { ...route.params };
@@ -77,7 +78,12 @@ export default ({ route }) => {
               {movie.release_date.substring(0, 4)}
             </Text>
             <Text style={styles.textTime}>{movie.runtime}min</Text>
-            <Text style={styles.textNormal}>{movie.vote_average} / 10</Text>
+            <View style={styles.contentAverage}>
+              <AntDesign name="star" size={18} color="rgb(210, 220, 19)" />
+              <Text style={[styles.textAverage]}>
+                {movie.vote_average} / 10
+              </Text>
+            </View>
           </View>
         </View>
         <View style={styles.containerOverview}>
